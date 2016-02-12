@@ -23,7 +23,8 @@ public class LoginActivity extends AppCompatActivity implements XAuth500pxTask.D
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         XAuth500pxTask loginTask = new XAuth500pxTask(this);
-        loginTask.execute(getString(R.string.px_consumer_key), getString(R.string.px_consumer_secret),"alvinhx","Hexin555688");
+        loginTask.execute(getString(R.string.px_consumer_key), getString(R.string.px_consumer_secret),getString(R.string.user_name),getString(R.string.password));
+        // login using testing account. Normally password is never stored in the app.Here just for testing purpose, temporally store password into string.
     }
 
     @Override
@@ -33,8 +34,9 @@ public class LoginActivity extends AppCompatActivity implements XAuth500pxTask.D
         Config bean = Config.getInstance();
         bean.setKey("auth_token",result);
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, SimpleImageActivity.class);
         startActivity(intent);
+        finish();
 
 
     }

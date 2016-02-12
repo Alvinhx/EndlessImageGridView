@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">EndlessImageGridView</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_simple">ImageActivity</string>
+
+    <string name="title_fragment_grid">Grid view</string>
+
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -16,4 +20,16 @@
     </string>
     <string name="px_consumer_key">e6LD5btKusXoaZ5ozWiXXsAouPkHckQXkM0lmfot</string>
     <string name="px_consumer_secret">k1d733dftjloToYThBjbH71NMKilFR2nAn0mLaBg</string>
+    <string name="user_name">alvinhx</string>
+    <string name="password">Hexin555688</string>
+
+
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_fragment_pager">Gallery</string>
+
 </resources>

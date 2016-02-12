@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.alvinhx.endlessImageGridView"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -22,9 +22,10 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    compile project(':500px-android-sdk-master')
+
     compile 'com.android.support:appcompat-v7:22.1.+'
     compile 'com.android.support:design:22.2.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile project(':500px-android-sdk-master')
-
+    compile 'com.android.support:support-v4:21.0.3'
 }

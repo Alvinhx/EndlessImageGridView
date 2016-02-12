@@ -3,6 +3,7 @@ package com.alvinhx.endlessImageGridView;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * An extended adapter to handel all types of image resources
+ *
  * Created by solor on 2016-02-09.
  */
 public class ExtendedSimpleAdapter extends SimpleAdapter{
@@ -54,7 +57,7 @@ public class ExtendedSimpleAdapter extends SimpleAdapter{
             v = mInflater.inflate(resource, parent, false);
             holder = new ViewHolder();
             holder.name = (TextView)v.findViewById(R.id.title);
-            holder.icon = (ImageView)v.findViewById(R.id.img);
+            holder.imgview = (ImageView)v.findViewById(R.id.img);
             v.setTag(holder);
         } else {
             v = convertView;
@@ -115,7 +118,7 @@ public class ExtendedSimpleAdapter extends SimpleAdapter{
                         } else if (data instanceof Drawable){
                             setViewImage((ImageView) v, (Drawable) data);
                         } else if (data instanceof String){
-                            Picasso.with(context).load((String) data).placeholder(R.drawable.logo500px_2).into((ImageView)v);
+                            Picasso.with(context).load((String) data).placeholder(R.drawable.logo500px).into((ImageView)v);
                         }else{
                             setViewImage((ImageView) v, text);
                         }
@@ -130,7 +133,7 @@ public class ExtendedSimpleAdapter extends SimpleAdapter{
 
     static class ViewHolder{
         TextView name;
-        ImageView icon;
+        ImageView imgview;
     }
 
 

@@ -26,7 +26,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity implements GETPhotosTask.Delegate {
+/*
+* simple grid view activity - deprecated. not in use.
+*/
+public class MainActivity extends AppCompatActivity {
 
     private String TAG = "MainActivity";
     private AccessToken accessToken = null;
@@ -34,13 +37,11 @@ public class MainActivity extends AppCompatActivity implements GETPhotosTask.Del
 
     JSONObject jobj_photo = null;
 
-    private int offset = 0;// count current item amount
+    private int offset = 1;// count current item amount
     private GridView gridview;
     private Toolbar toolbar;
-    private Bitmap scrBitmap;
 
     private GETPhotosTask getPhotosTask = null;
-    private boolean isLoading = true;
 
     private Activity mContext;
     private Context context;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements GETPhotosTask.Del
         if (accessToken != null) {
             ImgArray = new ArrayList<HashMap<String, Object>>();
             getPhotosTask = new GETPhotosTask();
-            getPhotosTask.execute(ActivityConstants.GET_PHOTO_THUMBNAIL440);
+            getPhotosTask.execute(ActivityConstants.URL_GET_PHOTO_THUMBNAIL440 + "&page=" + offset);
         } else {
             Log.d("MainActivity", "accesstoken is none");
         }
@@ -150,72 +151,13 @@ public class MainActivity extends AppCompatActivity implements GETPhotosTask.Del
                 getPhotosTask = null;
             }
 
+            offset++;
 
             if (mDialog != null && mDialog.isShowing()) {
                 mDialog.dismiss();
             }
 
         }
-    }
-
-    private void GetImageListTask(JSONObject jobj_photo) {
-        final JSONObject jobj_local = jobj_photo;
-
-        new AsyncTask<Integer, Void, String>() {
-
-            @Override
-            protected String doInBackground(Integer... params) {
-                //processing photo data from bucket
-                try {
-                    if (jobj_local.has("photos") || (jobj_local.get("photos") instanceof JSONArray)) {
-
-                        //get photo array
-                        JSONArray jar_photo = jobj_local.getJSONArray("photos");
-                        Log.d(TAG, "photo length is  " + jar_photo.length());
-                        for (int i = 0; i < jar_photo.length(); i++) {
-                            JSONObject c = jar_photo.getJSONObject(i);
-                            String id = c.getString("id");
-                            String name = c.getString("name");
-
-                            // get photo thumbnail url
-                            JSONArray img_url = c.getJSONArray("images");
-                            JSONObject jobj_imgurl = img_url.getJSONObject(0);
-                            String thumb_url = jobj_imgurl.getString("https_url");
-
-                            // get user infor
-                            JSONObject user_info = c.getJSONObject("user");
-                            String user_id = user_info.getString("id");
-                            String user_name = user_info.getString("username");
-                            String user_picurl = user_info.getString("userpic_url");
-
-                            HashMap<String, Object> map = new HashMap<String, Object>();
-                            map.put(ActivityConstants.TAG_IMG_ID, id);
-                            map.put(ActivityConstants.TAG_IMG_NAME, name);
-                            map.put(ActivityConstants.TAG_IMG_URL, thumb_url);
-                            map.put(ActivityConstants.TAG_USER_ID, user_id);
-                            map.put(ActivityConstants.TAG_USER_NAME, user_name);
-                            map.put(ActivityConstants.TAG_USER_PIC_URL, user_picurl);
-                            ImgArray.add(map);
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(String result) {
-                AddCardToView(ImgArray);
-                if (getPhotosTask != null) {
-                    getPhotosTask = null;
-                }
-            }
-
-
-        }.execute();
-
     }
 
     private void AddCardToView(ArrayList<HashMap<String, Object>> imgArray) {
@@ -237,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements GETPhotosTask.Del
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (totalItemCount < offset) {
+                /*if (totalItemCount < offset) {
                     offset = totalItemCount;
                     if (totalItemCount == 0) {
                         isLoading = true;
@@ -247,14 +189,14 @@ public class MainActivity extends AppCompatActivity implements GETPhotosTask.Del
                 if (isLoading && (totalItemCount > offset)) {
                     isLoading = false;
                     offset = totalItemCount;
-                }
+                }*/
 
-                if (totalItemCount != 0 && (firstVisibleItem + visibleItemCount == totalItemCount) && !isLoading&&getPhotosTask==null) {
+                if (totalItemCount != 0 && (firstVisibleItem + visibleItemCount == totalItemCount) && getPhotosTask == null) {
                     // reach the end
                     //offset = totalItemCount;
                     Log.v("reach the end", "reach the end");
                     getPhotosTask = new GETPhotosTask();
-                    getPhotosTask.execute(ActivityConstants.GET_PHOTO_THUMBNAIL440);
+                    getPhotosTask.execute(ActivityConstants.URL_GET_PHOTO_THUMBNAIL440+ "&page=" + offset);
                 }
 
             }
@@ -263,17 +205,4 @@ public class MainActivity extends AppCompatActivity implements GETPhotosTask.Del
         gridview.setSelection(currentPosition);
     }
 
-    @Override
-    public void onSuccess(JSONObject jobj_photo) {
-        if (null != jobj_photo) {
-            //Log.d(TAG, "receive photo array" + jobj_photo);
-            GetImageListTask(jobj_photo);
-        }
-    }
-
-
-    @Override
-    public void onFail(Exception e) {
-
-    }
 }

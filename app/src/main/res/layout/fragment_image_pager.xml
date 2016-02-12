@@ -1,0 +1,29 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.alvinhx.endlessImageGridView.ImagePagerFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true">
+
+
+    </android.support.v4.view.ViewPager>
+
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_size"
+        android:background="@android:color/transparent"
+        android:elevation="2dp"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingTop="@dimen/toolbar_marginTop">
+
+    </android.support.v7.widget.Toolbar>
+
+
+</FrameLayout>

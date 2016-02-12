@@ -5,6 +5,7 @@ import com.fivehundredpx.api.auth.AccessToken;
 import java.util.HashMap;
 
 /**
+ * to store value sets
  * Created by solor on 2016-02-09.
  */
 public class Config {
